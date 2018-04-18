@@ -4,10 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Functional Programming in Non-Functional Languages</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/custom.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +25,104 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>Functional Programming</h2>
+					<h3>In Non-Functional Languages</h3>
+					<p><img class="raw" src="seb-logo-light.png" /></p>
+					<p><small>Justin Nelson (@jjnguy)</small></p>
+				</section>
+
+				<section>
+					<h2>Speaker Info</h2>
+					<p>Justin Nelson</p>
+					<p>Lead Develoer @ Self Esteem Brands</p>
+					<p>@jjnguy - everywhere</p>
+				</section>
+
+				<section>
+					<h2>Paradigm</h2>
+					<p class="phonetic">/ˈpær əˌdaɪm, -dɪm/</p>
+					<blockquote cite="http://www.dictionary.com/browse/paradigm">
+						a framework containing the basic assumptions, ways of thinking, and methodology that are commonly accepted by members of a scientific community
+					</blockquote>
+				</section>
+
+				<section>
+					<h2>Language Paradigms</h2>
+					<ul>
+						<li>Declarative</li>
+						<li>Imperative/Procedural</li>
+						<li>Object Oriented</li>
+						<li>Functional</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Declarative</h2>
+					<p>Tell a computer 'what' to do, not 'how' to do it</p>
+					<p>
+						<h3>SQL</h3>
+						<span>SELECT something FROM somewhere WHERE it looks like this</span>
+					</p>
+					<p>
+						<h3>C#</h3>
+						<span>collection.Where(it => it.IsMatch).OrderBy(it => it.Name)</span>
+					</p>
+				</section>
+
+				<section>
+					<h2>Imperative/Procedural</h2>
+					<p>Ordered statments that change a program's state to a desired result</p>
+					<p>
+						<h3>C (C++, C#, Java, Javascript, etc)</h3>
+						<span>int a = 6; int a2 = a * 2;</span>
+					</p>
+				</section>
+
+				<section>
+					<h2>Object Oriented</h2>
+					<p>Encapsulate logic and data into 'classes'</p>
+					<p>
+						<h3>Ruby</h3>
+						<span>nil is a class - 'nuff said</span>
+					</p>
+				</section>
+
+				<section>
+					<h2>Functional</h2>
+					<p>Utilizes functions to contain state and logic.</p>
+					<p>
+						<h3>Lisp</h3>
+						<span>(defun fatorial (n)
+							(cond
+								((= n 1) 1)
+								(t (* n (fatorial (- n 1))))))</span>
+					</p>
+				</section>
+
+				<section>
+					<h2>Multi-Paradigm Languages</h2>
+					<p>Languages that allow for multiple paradigms.</p>
+					<p>
+						<h3>C#</h3>
+						<span>
+							var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
+							var even = new List&lt;int&gt;();
+							foreach (var num in numbers) { if (num % 2 == 0) even.Add(num); }
+						</span>
+						<span>
+							var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
+							var even = numbers.Where(num => num % 2 == 0).ToList();
+						</span>
+					</p>
+				</section>
+
+				<section>
+					<h2>Why Functional?</h2>
+					<ul>
+						<li>Stateless</li>
+					</ul>
+				</section>
 			</div>
 		</div>
 
@@ -37,6 +134,9 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				history: true,
+				center: true,
+				progress: false,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },

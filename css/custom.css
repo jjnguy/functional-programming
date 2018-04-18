@@ -1,0 +1,10 @@
+
+.reveal section img.raw {
+  background: transparent;
+  border: 0px solid white;
+  box-shadow: inherit;
+}
+
+.phonetic {
+  color: #cacaca;
+}
