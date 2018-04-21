@@ -150,7 +150,22 @@ end
               var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
               var even = numbers.Where(num => num % 2 == 0).ToList();
 						</code></pre>
-					</section>
+          </section>
+          
+          <section>
+            <h3>Javascript</h3>
+            <pre><code class="javascript" data-trim contenteditable>
+              let numbers = [0, 1, 2, ... 100];
+              let even = [];
+              for (var ix = 0; ix &lt; numbers.length; ix++) {
+                if (numbers[ix] % 2 == 0) even.push(numbers[ix]);
+              }
+            </code></pre>
+            <pre><code class="javascript" data-trim contenteditable>
+              let numbers = [0, 1, 2, ... 100];
+              let even = numbers.filter(num =&gt; num % 2 == 0);
+            </code></pre>
+          </section>
 				</section>
 
 				<section>
@@ -162,14 +177,57 @@ end
 				</section>
 
 				<section>
-					<h2>Stateless</h2>
-					<p>Programmers are not as smart as we'd like to think</p>
-					<p>Limit scope of info a programmer needs to keep in their head</p>
+					<section>
+            <h2>Stateless</h2>
+            <p>Programmers are not as smart as we'd like to think</p>
+            <p>Limit scope of info a programmer needs to keep in their head</p>
+          </section>
+
+          <section>
+            <label>Procedural</label>
+            <pre><code class="javascript" data-trim contenteditable>
+              let books = [{ title: '...', author: '...'}, ... ];
+              let grouped = {};
+              for(var ix = 0; ix &lt; books.length; ix++) {
+                let book = books[ix];
+                if (book.author[0] == 'a') {
+                  if (!grouped[book.author]) grouped[book.author] = [];
+                  grouped[book.author].push(book);
+                }
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <label>Functional</label>
+            <pre><code class="javascript" data-trim contenteditable>
+              let books = [{ title: '...', author: '...'}, ... ];
+              let grouped = books
+                .filter(book => book.author[0] == 'a')
+                .groupBy(book => book.author);
+            </code></pre>
+          </section>
+
+          <section>
+            <label>output</label>
+            <pre><code class="javascript" data-trim contenteditable>
+              // both result in objects that look like:
+              {
+                "_author name_": [ { book by corresponding author }, ... ]
+              }
+            </code></pre>
+          </section>
 				</section>
 
 				<section>
-					<h2>Intentional</h2>
-					<p>Code that declares its intent serves 2 purposes - computation and documentation</p>
+					<section>
+            <h2>Intentional</h2>
+            <p>Code that declares its intent serves 2 purposes - computation and documentation</p>
+          </section>
+          
+          <section>
+
+          </section>
 				</section>
 			</div>
 		</div>
@@ -189,7 +247,8 @@ end
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true }
 				]
 			});
 		</script>
