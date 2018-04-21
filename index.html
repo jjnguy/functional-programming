@@ -99,7 +99,7 @@
 					</section>
 					<section>
 						<h3>Ruby</h3>
-						<pre><code data-trim contenteditable>
+						<pre><code class="ruby" data-trim contenteditable>
 class Incrementor
   @value = 0
   def increment
@@ -120,10 +120,12 @@ end
 					</section>
 					<section>
 						<h3>Lisp</h3>
-						<span>(defun fatorial (n)
-							(cond
-								((= n 1) 1)
-								(t (* n (fatorial (- n 1))))))</span>
+						<pre><code class="lisp" data-trim contenteditable>
+              (defun fatorial (n)
+                (cond
+                  ((= n 1) 1)
+                  (t (* n (fatorial (- n 1))))))
+            </code></pre>
 					</section>
 				</section>
 
@@ -133,16 +135,21 @@ end
 						<p>Languages that allow for multiple paradigms.</p>
 					</section>
 					<section>
-						<h3>C#</h3>
-						<span>
-							var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
-							var even = new List&lt;int&gt;();
-							foreach (var num in numbers) { if (num % 2 == 0) even.Add(num); }
-						</span>
-						<span>
+            <h3>C#</h3>
+            <pre><code class="csharp" data-trim contenteditable>
+              // procedural
+              var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
+              var even = new List&lt;int&gt;();
+              foreach (var num in numbers) 
+              { 
+                if (num % 2 == 0) even.Add(num); 
+              }
+            </code></pre>
+						<pre><code class="csharp" data-trim contenteditable>
+              // functional/declarative
 							var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
 							var even = numbers.Where(num => num % 2 == 0).ToList();
-						</span>
+						</code></pre>
 					</section>
 				</section>
 
