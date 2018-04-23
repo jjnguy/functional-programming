@@ -45,7 +45,15 @@
 					<p class="phonetic">/ˈpær əˌdaɪm, -dɪm/</p>
 					<blockquote cite="http://www.dictionary.com/browse/paradigm">
 						a framework containing the basic assumptions, ways of thinking, and methodology that are commonly accepted by members of a scientific community
-					</blockquote>
+          </blockquote>
+        </section>
+        
+        <section>
+					<h2>Your Paradigm</h2>
+					<p class="phonetic">/ˈpær əˌdaɪm, -dɪm/</p>
+					<blockquote cite="http://www.dictionary.com/browse/paradigm">
+						The way you think code should look
+          </blockquote>
 				</section>
 
 				<section>
@@ -188,6 +196,24 @@ end
           </section>
 
           <section>
+            <h3>Example</h3>
+            <label>Convert</label>
+            <pre><code class="javascript" data-trim contenteditable>
+              var books = [
+                { author: '_author name_', title: '...'},
+                ... 
+              ]
+            </code></pre>
+            <label>To</label>
+            <pre><code class="javascript" data-trim contenteditable>
+              var booksByAuthor = {
+                '_author name_': [ { book by corresponding author }, ... ],
+                ...
+              }
+            </code></pre>
+          </section>
+
+          <section>
             <label>Procedural</label>
             <pre><code class="javascript" data-trim contenteditable>
               let books = [{ title: '...', author: '...'}, ... ];
@@ -213,22 +239,11 @@ end
           </section>
 
           <section>
-            <label>output</label>
-            <pre><code class="javascript" data-trim contenteditable>
-              // both result in objects that look like:
-              {
-                "_author name_": [ { book by corresponding author }, ... ],
-                ...
-              }
-            </code></pre>
-          </section>
-
-          <section>
             <h3>How is the Second Example Stateless?</h3>
             <ul>
-              <li>Intermediate variables</li>
-              <li>Partial results</li>
-              <li>Implementation details</li>
+              <li>No Intermediate variables</li>
+              <li>No Partial results</li>
+              <li>No Implementation details</li>
             </ul>
           </section>
 				</section>
