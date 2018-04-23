@@ -217,7 +217,7 @@ end
             <label>Procedural</label>
             <pre><code class="javascript" data-trim contenteditable>
               let books = [{ title: '...', author: '...'}, ... ];
-              let grouped = {};
+              let booksByAuthor = {};
               for(var ix = 0; ix &lt; books.length; ix++) {
                 let book = books[ix];
                 if (book.author[0] == 'a') {
@@ -232,7 +232,7 @@ end
             <label>Functional</label>
             <pre><code class="javascript" data-trim contenteditable>
               let books = [{ title: '...', author: '...'}, ... ];
-              let grouped = books
+              let booksByAuthor = books
                 .filter(book => book.author[0] == 'a')
                 .groupBy(book => book.author);
             </code></pre>
@@ -258,7 +258,7 @@ end
             <label>Procedural</label>
             <pre><code class="javascript" data-trim contenteditable>
               let books = [{ title: '...', author: '...'}, ... ];
-              let grouped = {};
+              let booksByAuthor = {};
               for(var ix = 0; ix &lt; books.length; ix++) {
                 let book = books[ix];
                 if (book.author[0] == 'a') {
@@ -273,7 +273,7 @@ end
             <label>Functional</label>
             <pre><code class="javascript" data-trim contenteditable>
               let books = [{ title: '...', author: '...'}, ... ];
-              let grouped = books
+              let booksByAuthor = books
                 .filter(book => book.author[0] == 'a')
                 .groupBy(book => book.author);
             </code></pre>
