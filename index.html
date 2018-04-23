@@ -217,6 +217,15 @@ end
               }
             </code></pre>
           </section>
+
+          <section>
+            <h3>How is the Second Example Stateless?</h3>
+            <ul>
+              <li>Intermediate variables</li>
+              <li>Partial results</li>
+              <li>Implementation details</li>
+            </ul>
+          </section>
 				</section>
 
 				<section>
@@ -224,9 +233,39 @@ end
             <h2>Intentional</h2>
             <p>Code that declares its intent serves 2 purposes - computation and documentation</p>
           </section>
-          
-          <section>
 
+          <section>
+            <label>Procedural</label>
+            <pre><code class="javascript" data-trim contenteditable>
+              let books = [{ title: '...', author: '...'}, ... ];
+              let grouped = {};
+              for(var ix = 0; ix &lt; books.length; ix++) {
+                let book = books[ix];
+                if (book.author[0] == 'a') {
+                  if (!grouped[book.author]) grouped[book.author] = [];
+                  grouped[book.author].push(book);
+                }
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <label>Functional</label>
+            <pre><code class="javascript" data-trim contenteditable>
+              let books = [{ title: '...', author: '...'}, ... ];
+              let grouped = books
+                .filter(book => book.author[0] == 'a')
+                .groupBy(book => book.author);
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>How is the Second Example Intentional?</h3>
+            <ul>
+              <li>Separate Steps</li>
+              <li>Named Steps</li>
+              <li>No Implementation Details</li>
+            </ul>
           </section>
 				</section>
 			</div>
