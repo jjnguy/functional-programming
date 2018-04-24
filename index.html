@@ -145,7 +145,7 @@
               var client = new HttpClient();
               client.Get("https://stackoverflow.com/api/questions/tagged/csharp")
                 .OnError(error => throw new Exception(error.Message))
-                .Success(data => JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data))
+                .Success(data => JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(data))
                 .Where(q => q.Score > 200)
                 .OrderBy(q => q.Score)
                 .ToList()
