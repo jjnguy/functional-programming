@@ -19,7 +19,7 @@
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
+			document.getElementsByTagName('head')[0].appendChild( link );
 		</script>
 	</head>
 	<body>
@@ -55,34 +55,113 @@
           </blockquote>
 				</section>
 
+        <section>
+          <section>
+            <h2>Story Time</h2>
+          </section>
+
+          <section>
+            <h2>College Years</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              var client = new HttpClient();
+              var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+              var isSuccess = result.IsSuccessStatusCode;
+              if (!isSuccess) return null;
+              var data = result.Data;
+              var parsed = JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(data);
+              var popular = new List&lt;Question&gt;();
+              foreach(var q in parsed)
+              {
+                if (q.Score > 250) popular.Add(q);
+              }
+              popular.Sort(new QuestionComparer());
+              foreach(var q in popular)
+              {
+                Console.WriteLine(q.Title);
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Early Career</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              class StackOverflowQuestionGetter 
+              {
+                private static HttpClient client = new HttpClient();
+
+                private List&lt;Question&gt; _questions;
+                public List&lt;Question&gt; Questions 
+                {
+                  get 
+                  {
+                    if (_questions == null) 
+                    {
+                      var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+                      if (!result.IsSuccessStatusCode) throw new Exception();
+                      _questions = JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data);
+                    }
+                    return _questions;
+                  }
+                } 
+
+                public void PrintPopularQuestions() 
+                {
+                  var popular = PopularQuestions().ToList();
+                  popular.Sort(new QuestionComparer());
+                  foreach(var q in popular)
+                  {
+                    Console.WriteLine(q.Title);
+                  }
+                }
+
+                private IEnumerable&lt;Question&gt; PopularQuestions()
+                {
+                  foreach(var q in Questions)
+                  {
+                    if (q.Score > 250) yield return q;
+                  }
+                }
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Now</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              var client = new HttpClient();
+              var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+              if (!result.IsSuccessStatusCode) throw new Exception();
+              JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data)
+                .Where(q => q.Score > 200)
+                .OrderBy(q => q.Score)
+                .ToList()
+                .ForEach(q => Console.WriteLine(q.Title));
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Future Zen</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              var client = new HttpClient();
+              client.Get("https://stackoverflow.com/api/questions/tagged/csharp")
+                .OnError(error => throw new Exception(error.Message))
+                .Success(data => JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data))
+                .Where(q => q.Score > 200)
+                .OrderBy(q => q.Score)
+                .ToList()
+                .ForEach(q => Console.WriteLine(q.Title));
+            </code></pre>
+          </section>
+        </section>
+
 				<section>
 					<h2>Language Paradigms</h2>
 					<ul>
-						<li>Declarative</li>
-						<li>Imperative/Procedural</li>
-						<li>Object Oriented</li>
-						<li>Functional</li>
+            <li>Imperative/Procedural</li>
+            <li>Object Oriented</li>
+            <li>Declarative</li>
+            <li>Functional</li>
 					</ul>
-				</section>
-
-				<section>
-					<section>
-						<h2>Declarative</h2>
-						<p>Tell a computer 'what' to do, not 'how' to do it</p>
-					</section>
-					<section>
-						<h3>SQL</h3>
-						<pre><code class="sql" data-trim contenteditable>
-							SELECT something FROM somewhere WHERE it looks like this
-						</code></pre>
-						<span></span>
-					</section>
-					<section>
-						<h3>C#</h3>
-						<pre><code class="csharp" data-trim contenteditable>
-							collection.Where(it => it.IsMatch).OrderBy(it => it.Name)
-						</code></pre>
-					</section>
 				</section>
 
 				<section>
@@ -123,6 +202,26 @@ end
 						</code></pre>
 					</section>
 				</section>
+
+				<section>
+          <section>
+            <h2>Declarative</h2>
+            <p>Tell a computer 'what' to do, not 'how' to do it</p>
+          </section>
+          <section>
+            <h3>SQL</h3>
+            <pre><code class="sql" data-trim contenteditable>
+              SELECT something FROM somewhere WHERE it looks like this
+            </code></pre>
+            <span></span>
+          </section>
+          <section>
+            <h3>C#</h3>
+            <pre><code class="csharp" data-trim contenteditable>
+              collection.Where(it => it.IsMatch).OrderBy(it => it.Name)
+            </code></pre>
+          </section>
+        </section>
 
 				<section>
 					<section>
