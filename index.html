@@ -19,15 +19,14 @@
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
+			document.getElementsByTagName('head')[0].appendChild( link );
 		</script>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h2>Functional Programming</h2>
-					<h3>For Mere Mortals</h3>
+					<h2>Journey to Functional Programming</h2>
 					<p><img class="raw" src="seb-logo-light.png" /></p>
 					<p><small>Justin Nelson</small></p>
 					<p><small>#HealthyCode</small></p>
@@ -55,34 +54,129 @@
           </blockquote>
 				</section>
 
+        <section>
+          <section>
+            <h2>Story Time</h2>
+          </section>
+
+          <section>
+            <h2>Scenario</h2>
+            <ol>
+              <li>Fetch Question from Stackoverflow API</li>
+              <li>Filter the Questions</li>
+              <li>Sort the Questions</li>
+              <li>Print the Question Titles</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>College Years</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              var client = new HttpClient();
+              var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+              var isSuccess = result.IsSuccessStatusCode;
+              if (!isSuccess) return null;
+              var data = result.Data;
+              var parsed = JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(data);
+              var popular = new List&lt;Question&gt;();
+              foreach(var q in parsed)
+              {
+                if (q.Score > 250) popular.Add(q);
+              }
+              popular.Sort(new QuestionComparer());
+              foreach(var q in popular)
+              {
+                Console.WriteLine(q.Title);
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Early Career</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              class StackOverflowQuestionGetter 
+              {
+                private static HttpClient client = new HttpClient();
+
+                private List&lt;Question&gt; _questions;
+                public List&lt;Question&gt; Questions 
+                {
+                  get 
+                  {
+                    if (_questions == null) 
+                    {
+                      var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+                      if (!result.IsSuccessStatusCode) throw new Exception();
+                      _questions = JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data);
+                    }
+                    return _questions;
+                  }
+                } 
+
+                public void PrintPopularQuestions() 
+                {
+                  var popular = PopularQuestions().ToList();
+                  popular.Sort(new QuestionComparer());
+                  foreach(var q in popular)
+                  {
+                    Console.WriteLine(q.Title);
+                  }
+                }
+
+                private IEnumerable&lt;Question&gt; PopularQuestions()
+                {
+                  foreach(var q in Questions)
+                  {
+                    if (q.Score > 250) yield return q;
+                  }
+                }
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Now</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              var client = new HttpClient();
+              var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+              if (!result.IsSuccessStatusCode) throw new Exception();
+              JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data)
+                .Where(q => q.Score > 200)
+                .OrderBy(q => q.Score)
+                .ToList()
+                .ForEach(q => Console.WriteLine(q.Title));
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Future Zen</h2>
+            <pre><code class="csharp" data-trim contenteditable>
+              var client = new HttpClient();
+              client.Get("https://stackoverflow.com/api/questions/tagged/csharp")
+                .OnError(error => throw new Exception(error.Message))
+                .Success(data => JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(data))
+                .Where(q => q.Score > 200)
+                .OrderBy(q => q.Score)
+                .ToList()
+                .ForEach(q => Console.WriteLine(q.Title));
+            </code></pre>
+          </section>
+
+          <section>
+            <p>Many ways to write the same code</p>
+            <p>Some are subjectively better</p>
+            <p>There are objective differences</p>
+          </section>
+        </section>
+
 				<section>
 					<h2>Language Paradigms</h2>
 					<ul>
-						<li>Declarative</li>
-						<li>Imperative/Procedural</li>
-						<li>Object Oriented</li>
-						<li>Functional</li>
+            <li>Imperative/Procedural</li>
+            <li>Object Oriented</li>
+            <li>Declarative</li>
+            <li>Functional</li>
 					</ul>
-				</section>
-
-				<section>
-					<section>
-						<h2>Declarative</h2>
-						<p>Tell a computer 'what' to do, not 'how' to do it</p>
-					</section>
-					<section>
-						<h3>SQL</h3>
-						<pre><code class="sql" data-trim contenteditable>
-							SELECT something FROM somewhere WHERE it looks like this
-						</code></pre>
-						<span></span>
-					</section>
-					<section>
-						<h3>C#</h3>
-						<pre><code class="csharp" data-trim contenteditable>
-							collection.Where(it => it.IsMatch).OrderBy(it => it.Name)
-						</code></pre>
-					</section>
 				</section>
 
 				<section>
@@ -93,14 +187,18 @@
 					<section>
 						<h3>C (C++, C#, Java, Javascript, etc)</h3>
 						<pre><code class="c" data-trim contenteditable>
-								int a = 6;
-								int b = 8;
-								int a2 = a * a;
-								int b2 = b * a;
-								int c2 = a2 + b2;
-								double c = Math.sqrt(c2); // c = 10
+              int a = 6;
+              int b = 8;
+              int a2 = a * a;
+              int b2 = b * a;
+              int c2 = a2 + b2;
+              double c = Math.sqrt(c2); // c = 10
 						</code></pre>
-					</section>
+          </section>
+          
+          <section>
+            <h3>Pros/Cons</h3>
+          </section>
 				</section>
 
 				<section>
@@ -125,6 +223,26 @@ end
 				</section>
 
 				<section>
+          <section>
+            <h2>Declarative</h2>
+            <p>Tell a computer 'what' to do, not 'how' to do it</p>
+          </section>
+          <section>
+            <h3>SQL</h3>
+            <pre><code class="sql" data-trim contenteditable>
+              SELECT something FROM somewhere WHERE it looks like this
+            </code></pre>
+            <span></span>
+          </section>
+          <section>
+            <h3>C#</h3>
+            <pre><code class="csharp" data-trim contenteditable>
+              collection.Where(it => it.IsMatch).OrderBy(it => it.Name)
+            </code></pre>
+          </section>
+        </section>
+
+				<section>
 					<section>
 						<h2>Functional</h2>
 						<p>Utilizes functions to contain state and logic.</p>
@@ -141,49 +259,11 @@ end
 				</section>
 
 				<section>
-					<section>
-						<h2>Multi-Paradigm Languages</h2>
-						<p>Languages that allow for multiple paradigms.</p>
-					</section>
-					<section>
-            <h3>C#</h3>
-            <pre><code class="csharp" data-trim contenteditable>
-              // procedural
-              var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
-              var even = new List&lt;int&gt;();
-              foreach (var num in numbers) 
-              { 
-                if (num % 2 == 0) even.Add(num); 
-              }
-            </code></pre>
-						<pre><code class="csharp" data-trim contenteditable>
-              // functional/declarative
-              var numbers = new List&lt;int&gt; { 0, 1, 2, ... 100 };
-              var even = numbers.Where(num => num % 2 == 0).ToList();
-						</code></pre>
-          </section>
-          
-          <section>
-            <h3>Javascript</h3>
-            <pre><code class="javascript" data-trim contenteditable>
-              let numbers = [0, 1, 2, ... 100];
-              let even = [];
-              for (var ix = 0; ix &lt; numbers.length; ix++) {
-                if (numbers[ix] % 2 == 0) even.push(numbers[ix]);
-              }
-            </code></pre>
-            <pre><code class="javascript" data-trim contenteditable>
-              let numbers = [0, 1, 2, ... 100];
-              let even = numbers.filter(num =&gt; num % 2 == 0);
-            </code></pre>
-          </section>
-				</section>
-
-				<section>
 					<h2>Why Functional?</h2>
 					<ul>
 						<li>Stateless</li>
-						<li>Intentional</li>
+            <li>Intentional</li>
+            <li>Thread-safe</li>
 					</ul>
 				</section>
 
@@ -192,49 +272,6 @@ end
             <h2>Stateless</h2>
             <p>Programmers are not as smart as we'd like to think</p>
             <p>Limit scope of info a programmer needs to keep in their head</p>
-          </section>
-
-          <section>
-            <h3>Example</h3>
-            <label>Convert</label>
-            <pre><code class="javascript" data-trim contenteditable>
-              var books = [
-                { author: '_author name_', title: '...'},
-                ... 
-              ]
-            </code></pre>
-            <label>To</label>
-            <pre><code class="javascript" data-trim contenteditable>
-              var booksByAuthor = {
-                '_author name_': [ { book by corresponding author }, ... ],
-                ...
-              }
-            </code></pre>
-          </section>
-
-          <section>
-            <label>Procedural</label>
-            <pre><code class="javascript" data-trim contenteditable>
-              let books = [{ title: '...', author: '...'}, ... ];
-              let booksByAuthor = {};
-              for(var ix = 0; ix &lt; books.length; ix++) {
-                let book = books[ix];
-                if (book.author[0] == 'a') {
-                  if (!grouped[book.author]) grouped[book.author] = [];
-                  grouped[book.author].push(book);
-                }
-              }
-            </code></pre>
-          </section>
-
-          <section>
-            <label>Functional</label>
-            <pre><code class="javascript" data-trim contenteditable>
-              let books = [{ title: '...', author: '...'}, ... ];
-              let booksByAuthor = books
-                .filter(book => book.author[0] == 'a')
-                .groupBy(book => book.author);
-            </code></pre>
           </section>
 
           <section>
@@ -254,31 +291,6 @@ end
           </section>
 
           <section>
-            <label>Procedural</label>
-            <pre><code class="javascript" data-trim contenteditable>
-              let books = [{ title: '...', author: '...'}, ... ];
-              let booksByAuthor = {};
-              for(var ix = 0; ix &lt; books.length; ix++) {
-                let book = books[ix];
-                if (book.author[0] == 'a') {
-                  if (!grouped[book.author]) grouped[book.author] = [];
-                  grouped[book.author].push(book);
-                }
-              }
-            </code></pre>
-          </section>
-
-          <section>
-            <label>Functional</label>
-            <pre><code class="javascript" data-trim contenteditable>
-              let books = [{ title: '...', author: '...'}, ... ];
-              let booksByAuthor = books
-                .filter(book => book.author[0] == 'a')
-                .groupBy(book => book.author);
-            </code></pre>
-          </section>
-
-          <section>
             <h3>How is the Second Example Intentional?</h3>
             <ul>
               <li>Separate Steps</li>
@@ -288,6 +300,61 @@ end
           </section>
         </section>
         
+        <section>
+          <section>
+            <h2>No Magic</h2>
+            <p>Functional code is not magic</p>
+          </section>
+          
+          <section>
+              <label>Now You See It</label>
+              <pre><code class="javascript" data-trim contenteditable>
+                let books = [{ title: '...', author: '...'}, ... ];
+                let booksByAuthor = {};
+                for(var ix = 0; ix &lt; books.length; ix++) {
+                  let book = books[ix];
+                  if (book.author[0] == 'a') {
+                    if (!grouped[book.author]) grouped[book.author] = [];
+                    grouped[book.author].push(book);
+                  }
+                }
+              </code></pre>
+            </section>
+  
+            <section>
+              <label>Now You Don't</label>
+              <pre><code class="javascript" data-trim contenteditable>
+                let books = [{ title: '...', author: '...'}, ... ];
+                let booksByAuthor = books
+                  .filter(book => book.author[0] == 'a')
+                  .groupBy(book => book.author);
+              </code></pre>
+            </section>
+
+            <section>
+              <label>Peek Behind the Curtain</label>
+              <pre><code class="javascript" data-trim contenteditable>
+                function filter(predicate) {
+                  let result = [];
+                  for(var ix = 0; ix &lt; this.length; ix++) {
+                    if (predicate(this[ix])) result.push(this[ix]);
+                  }
+                  return result;
+                }
+
+                function groupBy(groupSelector) {
+                  let result = {};
+                  for(var ix = 0; ix &lt; this.length; ix++) {
+                    let groupId = groupSelector(this[ix]);
+                    if (!result[groupId]) result[groupId] = [];
+                    result[groupId].push(this[ix]);
+                  }
+                  return result;
+                }
+              </code></pre>
+            </section>
+        </section>
+
         <section>
           <h3>That's It</h3>
           <p>
