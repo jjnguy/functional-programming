@@ -352,17 +352,6 @@ end
           </section>
 				</section>
 
-          <section>
-            <h3>Thread-Safe</h3>
-            <p>Moore's Law isn't holding as it used to</p>
-            <p>Modern Apps do lots of I/O</p>
-            <ul>
-              <li>Lack of state makes threadsafety trivial</li>
-              <li>Don't have to write locking code</li>
-            </ul>
-          </section>
-				</section>
-
         <section>
           <section>
             <h2>No Magic</h2>
@@ -399,6 +388,8 @@ end
             <section>
               <label>Peek Behind the Curtain</label>
               <pre><code class="javascript" data-trim contenteditable>
+                // `predicate` is a function that takes one value and
+                // returns true or false
                 function filter(predicate) {
                   let result = [];
                   for(var ix = 0; ix &lt; this.length; ix++) {
@@ -407,12 +398,14 @@ end
                   return result;
                 }
 
+                // `groupSelector` is a function that takes one value and 
+                // computes a 'key' that will be used to group the value
                 function groupBy(groupSelector) {
                   let result = {};
                   for(var ix = 0; ix &lt; this.length; ix++) {
-                    let groupId = groupSelector(this[ix]);
-                    if (!result[groupId]) result[groupId] = [];
-                    result[groupId].push(this[ix]);
+                    let groupKey = groupSelector(this[ix]);
+                    if (!result[groupKey]) result[groupKey] = [];
+                    result[groupKey].push(this[ix]);
                   }
                   return result;
                 }
@@ -423,13 +416,13 @@ end
         <section>
           <h3>That's It</h3>
           <p>
-            There are many ways to write code. Choose the one that best suites your application.
+            There are many ways to write code. Choose the way that best suites your application.
           </p>
         </section>
         <section>
-          <h3>??????</h3>
+          <h3>Thanks for Listening!</h3>
           <p>
-            ??????
+            Questions?
           </p>
         </section>
 			</div>
