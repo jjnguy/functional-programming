@@ -8,3 +8,8 @@
 .phonetic {
   color: #cacaca;
 }
+
+.reveal section pre {
+  width: 100%;
+  font-size: 0.65em;
+}
