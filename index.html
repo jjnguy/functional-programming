@@ -70,6 +70,16 @@
 				</section>
 
         <section>
+          <h2>Outline</h2>
+          <ol>
+            <li>Anecdotes</li>
+            <li>Definitionsof Paradigms</li>
+            <li>Functional Overview</li>
+          </ol>
+          <p>Outcome: Change the way you think code should look</p>
+        </section>
+
+        <section>
           <section>
             <h2>Story Time</h2>
 
@@ -94,31 +104,26 @@
             <h2>College Years</h2>
             <pre><code class="csharp" data-trim contenteditable>
               var client = new HttpClient();
-              var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+              // 1. Fetch the questions
+              var result = client.Get("http://stackoverflow.com/api/questions/tagged/csharp");
               var isSuccess = result.IsSuccessStatusCode;
               if (!isSuccess) return null;
               var data = result.Data;
-              var parsed = JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(data);
+              var parsed = JsonConvert.Parse&lt;List&lt;Question&gt;&gt;(data);
+              // 2. Filter the questions
               var popular = new List&lt;Question&gt;();
               foreach(var q in parsed)
               {
                 if (q.Score > 250) popular.Add(q);
               }
-              popular.Sort(new QuestionComparer());
+              // 3. Sort the questions
+              popular.Sort(new QuestionScoreComparer());
+              // 4. Print the titles
               foreach(var q in popular)
               {
                 Console.WriteLine(q.Title);
               }
             </code></pre>
-
-            <aside class="notes">
-              <ol>
-                <li>Pro - nothing hidden</li>
-                <li>Pro - fairly suscinct</li>
-                <li>Con - lots of detail</li>
-                <li>Con - unclear steps</li>
-              </ol>
-            </aside>
           </section>
 
           <section>
@@ -135,9 +140,10 @@
                   {
                     if (_questions == null) 
                     {
-                      var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+                      // 1. Fetch the questions
+                      var result = client.Get("http://stackoverflow.com/api/questions/tagged/csharp");
                       if (!result.IsSuccessStatusCode) throw new Exception();
-                      _questions = JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data);
+                      _questions = JsonConvert.Parse&lt;List&lt;Question&gt;&gt;(result.Data);
                     }
                     return _questions;
                   }
@@ -146,13 +152,16 @@
                 public void PrintPopularQuestions() 
                 {
                   var popular = PopularQuestions().ToList();
-                  popular.Sort(new QuestionComparer());
+                  // 3. Sort the questions
+                  popular.Sort(new QuestionScoreComparer());
+                  // 4. Print the titles
                   foreach(var q in popular)
                   {
                     Console.WriteLine(q.Title);
                   }
                 }
 
+                // 2. Filter the questions
                 private IEnumerable&lt;Question&gt; PopularQuestions()
                 {
                   foreach(var q in Questions)
@@ -162,37 +171,21 @@
                 }
               }
             </code></pre>
-
-            <aside class="notes">
-              <ol>
-                <li>Pro - still quite transparent</li>
-                <li>Pro - some parts are clearly labeled</li>
-                <li>Con - so much code</li>
-                <li>Con - poor abstractions</li>
-              </ol>
-            </aside>
           </section>
 
           <section>
             <h2>Now</h2>
             <pre><code class="csharp" data-trim contenteditable>
               var client = new HttpClient();
-              var result = client.Get("https://stackoverflow.com/api/questions/tagged/csharp");
+              // 1. Fetch the questions
+              var result = client.Get("http://stackoverflow.com/api/questions/tagged/csharp");
               if (!result.IsSuccessStatusCode) throw new Exception();
-              JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(result.Data)
-                .Where(q => q.Score > 200)
-                .OrderBy(q => q.Score)
+              JsonConvert.Parse&lt;List&lt;Question&gt;&gt;(result.Data)
+                .Where(q => q.Score > 250) // 2. Filter the questions
+                .OrderBy(q => q.Score) // 3. Sort the questions
                 .ToList()
-                .ForEach(q => Console.WriteLine(q.Title));
+                .ForEach(q => Console.WriteLine(q.Title)); // 4. Print the titles
             </code></pre>
-
-            <aside class="notes">
-              <ol>
-                <li>Pro - succinct</li>
-                <li>Pro - clear steps</li>
-                <li>Con - hidden details</li>
-              </ol>
-            </aside>
           </section>
 
           <section>
@@ -224,10 +217,19 @@
               int a = 6;
               int b = 8;
               int a2 = a * a;
-              int b2 = b * a;
+              int b2 = b * b;
               int c2 = a2 + b2;
               double c = Math.sqrt(c2); // c = 10
             </code></pre>
+
+            <aside class="notes">
+              <ol>
+                <li>Pro - nothing hidden</li>
+                <li>Pro - fairly suscinct</li>
+                <li>Con - lots of detail</li>
+                <li>Con - unclear steps</li>
+              </ol>
+            </aside>
           </section>
 				</section>
 
@@ -249,7 +251,16 @@ class Incrementor
     return @value
   end
 end
-						</code></pre>
+            </code></pre>
+            
+            <aside class="notes">
+              <ol>
+                <li>Pro - still quite transparent</li>
+                <li>Pro - some parts are clearly labeled</li>
+                <li>Con - so much code</li>
+                <li>Con - poor abstractions</li>
+              </ol>
+            </aside>
 					</section>
 				</section>
 
@@ -271,6 +282,14 @@ end
             <pre><code class="csharp" data-trim contenteditable>
               collection.Where(it => it.IsMatch).OrderBy(it => it.Name)
             </code></pre>
+
+            <aside class="notes">
+              <ol>
+                <li>Pro - succinct</li>
+                <li>Pro - clear steps</li>
+                <li>Con - hidden details</li>
+              </ol>
+            </aside>
           </section>
         </section>
 
@@ -310,41 +329,31 @@ end
           <section>
             <h3>Stateless</h3>
             <p>Programmers are not as smart as we'd like to think</p>
-            <p>Limit scope of info a programmer needs to keep in their head</p>
-
-            <aside class="notes">
-              <ol>
-                <li>Focus on individual functions</li>
-                <li>Keeps scope of problems small</li>
-                <li>One step smaller than OO even</li>
-              </ol>
-            </aside>
+            <ul>
+              <li>Focus on individual functions</li>
+              <li>Keeps scope of problems small</li>
+              <li>One step smaller than OO even</li>
+            </ul>
           </section>
 
           <section>
             <h3>Intentional</h3>
             <p>Code that declares its intent serves 2 purposes - computation and documentation</p>
-
-            <aside class="notes">
-              <ol>
-                <li>Functions clearly name their intent</li>
-                <li>Code is written in declarative style</li>
-                <li>Implementation details are hidden</li>
-              </ol>
-            </aside>
+            <ul>
+              <li>Functions clearly name their intent</li>
+              <li>Code is written in declarative style</li>
+              <li>Implementation details are hidden</li>
+            </ul>
           </section>
 
           <section>
             <h3>Thread-Safe</h3>
             <p>Moore's Law isn't holding as it used to</p>
             <p>Modern Apps do lots of I/O</p>
-
-            <aside class="notes">
-              <ol>
-                <li>Lack of state makes threadsafety trivial</li>
-                <li>Don't have to write locking code</li>
-              </ol>
-            </aside>
+            <ul>
+              <li>Lack of state makes threadsafety trivial</li>
+              <li>Don't have to write locking code</li>
+            </ul>
           </section>
 				</section>
 
