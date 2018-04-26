@@ -28,15 +28,15 @@
 				<section>
 					<h2>Journey to Functional Programming</h2>
 					<p><img class="raw" src="seb-logo-light.png" /></p>
-					<p><small>Justin Nelson</small></p>
-					<p><small>#HealthyCode</small></p>
-				</section>
-
-				<section>
-					<h2>Speaker Info</h2>
-					<p>Justin Nelson</p>
-					<p>Lead Developer @ Self Esteem Brands</p>
-					<p>@jjnguy - everywhere</p>
+					<p><small>Justin Nelson - Lead Developer @ Self Esteem Brands</small></p>
+          <p><small>#HealthyCode</small></p>
+          
+          <aside class="notes">
+            <ol>
+              <li>Thank people for coming.</li>
+              <li>Call for questions</li>
+            </ol>
+          </aside>
 				</section>
 
 				<section>
@@ -45,6 +45,14 @@
 					<blockquote cite="http://www.dictionary.com/browse/paradigm">
 						a framework containing the basic assumptions, ways of thinking, and methodology that are commonly accepted by members of a scientific community
           </blockquote>
+
+          <aside class="notes">
+            <ol>
+              <li>Title is about Functional</li>
+              <li>Functional is Paradigm</li>
+              <li>According to the dictionary</li>
+            </ol>
+          </aside>
         </section>
         
         <section>
@@ -52,11 +60,24 @@
 					<blockquote cite="https://github.com/jjnguy/functional-programming/commit/c4587d1800e348c3c2dd5143f38dd23127f4a29b">
 						The way you think code should look
           </blockquote>
+
+          <aside class="notes">
+            <ol>
+              <li>Always changing</li>
+              <li>subjective</li>
+            </ol>
+          </aside>
 				</section>
 
         <section>
           <section>
             <h2>Story Time</h2>
+
+            <aside class="notes">
+              <ol>
+                <li>Not a true story</li>
+              </ol>
+            </aside>
           </section>
 
           <section>
@@ -89,6 +110,15 @@
                 Console.WriteLine(q.Title);
               }
             </code></pre>
+
+            <aside class="notes">
+              <ol>
+                <li>Pro - nothing hidden</li>
+                <li>Pro - fairly suscinct</li>
+                <li>Con - lots of detail</li>
+                <li>Con - unclear steps</li>
+              </ol>
+            </aside>
           </section>
 
           <section>
@@ -132,6 +162,15 @@
                 }
               }
             </code></pre>
+
+            <aside class="notes">
+              <ol>
+                <li>Pro - still quite transparent</li>
+                <li>Pro - some parts are clearly labeled</li>
+                <li>Con - so much code</li>
+                <li>Con - poor abstractions</li>
+              </ol>
+            </aside>
           </section>
 
           <section>
@@ -146,20 +185,14 @@
                 .ToList()
                 .ForEach(q => Console.WriteLine(q.Title));
             </code></pre>
-          </section>
 
-          <section>
-            <h2>Future Zen</h2>
-            <pre><code class="csharp" data-trim contenteditable>
-              var client = new HttpClient();
-              client.Get("https://stackoverflow.com/api/questions/tagged/csharp")
-                .OnError(error => throw new Exception(error.Message))
-                .Success(data => JsonConvert.DeserializeObject&lt;List&lt;Question&gt;&gt;(data))
-                .Where(q => q.Score > 200)
-                .OrderBy(q => q.Score)
-                .ToList()
-                .ForEach(q => Console.WriteLine(q.Title));
-            </code></pre>
+            <aside class="notes">
+              <ol>
+                <li>Pro - succinct</li>
+                <li>Pro - clear steps</li>
+                <li>Con - hidden details</li>
+              </ol>
+            </aside>
           </section>
 
           <section>
@@ -183,7 +216,8 @@
 					<section>
 						<h2>Imperative/Procedural</h2>
 						<p>Ordered statments that change a program's state to a desired result</p>
-					</section>
+          </section>
+          
 					<section>
 						<h3>C (C++, C#, Java, Javascript, etc)</h3>
 						<pre><code class="c" data-trim contenteditable>
@@ -193,16 +227,16 @@
               int b2 = b * a;
               int c2 = a2 + b2;
               double c = Math.sqrt(c2); // c = 10
-						</code></pre>
+            </code></pre>
           </section>
-          
 				</section>
 
 				<section>
 					<section>
 						<h2>Object Oriented</h2>
 						<p>Encapsulate logic and data into 'classes'</p>
-					</section>
+          </section>
+          
 					<section>
 						<h3>Ruby</h3>
 						<pre><code class="ruby" data-trim contenteditable>
@@ -231,6 +265,7 @@ end
             </code></pre>
             <span></span>
           </section>
+
           <section>
             <h3>C#</h3>
             <pre><code class="csharp" data-trim contenteditable>
@@ -242,7 +277,7 @@ end
 				<section>
 					<section>
 						<h2>Functional</h2>
-						<p>Utilizes functions to contain state and logic.</p>
+						<p>Utilizes functions to contain state and logic</p>
 					</section>
 					<section>
 						<h3>Lisp</h3>
@@ -252,51 +287,67 @@ end
                   ((= n 1) 1)
                   (t (* n (fatorial (- n 1))))))
             </code></pre>
+
+            <aside class="notes">
+              <ol>
+                <li>defun - function that takes a name, parameter list, and function body</li>
+                <li>uses prefix notation</li>
+              </ol>
+            </aside>
 					</section>
 				</section>
 
 				<section>
-					<h2>Why Functional?</h2>
-					<ul>
-						<li>Stateless</li>
-            <li>Intentional</li>
-            <li>Thread-safe</li>
-					</ul>
-				</section>
-
-				<section>
 					<section>
-            <h2>Stateless</h2>
+            <h2>Why Functional?</h2>
+            <ul>
+              <li>Stateless</li>
+              <li>Intentional</li>
+              <li>Thread-safe</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Stateless</h3>
             <p>Programmers are not as smart as we'd like to think</p>
             <p>Limit scope of info a programmer needs to keep in their head</p>
+
+            <aside class="notes">
+              <ol>
+                <li>Focus on individual functions</li>
+                <li>Keeps scope of problems small</li>
+                <li>One step smaller than OO even</li>
+              </ol>
+            </aside>
           </section>
 
           <section>
-            <h3>How is the Second Example Stateless?</h3>
-            <ul>
-              <li>No Intermediate variables</li>
-              <li>No Partial results</li>
-              <li>No Implementation details</li>
-            </ul>
+            <h3>Intentional</h3>
+            <p>Code that declares its intent serves 2 purposes - computation and documentation</p>
+
+            <aside class="notes">
+              <ol>
+                <li>Functions clearly name their intent</li>
+                <li>Code is written in declarative style</li>
+                <li>Implementation details are hidden</li>
+              </ol>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Thread-Safe</h3>
+            <p>Moore's Law isn't holding as it used to</p>
+            <p>Modern Apps do lots of I/O</p>
+
+            <aside class="notes">
+              <ol>
+                <li>Lack of state makes threadsafety trivial</li>
+                <li>Don't have to write locking code</li>
+              </ol>
+            </aside>
           </section>
 				</section>
 
-				<section>
-					<section>
-            <h2>Intentional</h2>
-            <p>Code that declares its intent serves 2 purposes - computation and documentation</p>
-          </section>
-
-          <section>
-            <h3>How is the Second Example Intentional?</h3>
-            <ul>
-              <li>Separate Steps</li>
-              <li>Named Steps</li>
-              <li>No Implementation Details</li>
-            </ul>
-          </section>
-        </section>
-        
         <section>
           <section>
             <h2>No Magic</h2>
@@ -306,13 +357,15 @@ end
           <section>
               <label>Now You See It</label>
               <pre><code class="javascript" data-trim contenteditable>
-                let books = [{ title: '...', author: '...'}, ... ];
-                let booksByAuthor = {};
-                for(var ix = 0; ix &lt; books.length; ix++) {
-                  let book = books[ix];
-                  if (book.author[0] == 'a') {
-                    if (!grouped[book.author]) grouped[book.author] = [];
-                    grouped[book.author].push(book);
+                let questions = [{ title: '...', userId: '...'}, ... ];
+                let wordyQuestionsByAsker = {};
+                for(var ix = 0; ix &lt; questions.length; ix++) {
+                  let question = questions[ix];
+                  if (question.title.length > 280) {
+                    if (!wordyQuestionsByAsker[question.userId]) {
+                      wordyQuestionsByAsker[question.userId] = [];
+                    }
+                    wordyQuestionsByAsker[question.userId].push(question);
                   }
                 }
               </code></pre>
@@ -321,10 +374,10 @@ end
             <section>
               <label>Now You Don't</label>
               <pre><code class="javascript" data-trim contenteditable>
-                let books = [{ title: '...', author: '...'}, ... ];
-                let booksByAuthor = books
-                  .filter(book => book.author[0] == 'a')
-                  .groupBy(book => book.author);
+                let questions = [{ title: '...', userId: '...'}, ... ];
+                let wordyQuestionsByAsker = questions
+                  .filter(question => question.title.length > 280)
+                  .groupBy(question => question.userId);
               </code></pre>
             </section>
 
