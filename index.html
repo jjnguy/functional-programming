@@ -269,20 +269,13 @@ end
             <h2>Declarative</h2>
             <p>Tell a computer 'what' to do, not 'how' to do it</p>
           </section>
+
           <section>
             <h3>SQL</h3>
             <pre><code class="sql" data-trim contenteditable>
               SELECT something FROM somewhere WHERE it looks like this
             </code></pre>
-            <span></span>
-          </section>
-
-          <section>
-            <h3>C#</h3>
-            <pre><code class="csharp" data-trim contenteditable>
-              collection.Where(it => it.IsMatch).OrderBy(it => it.Name)
-            </code></pre>
-
+            
             <aside class="notes">
               <ol>
                 <li>Pro - succinct</li>
@@ -297,7 +290,8 @@ end
 					<section>
 						<h2>Functional</h2>
 						<p>Utilizes functions to contain state and logic</p>
-					</section>
+          </section>
+          
 					<section>
 						<h3>Lisp</h3>
 						<pre><code class="lisp" data-trim contenteditable>
@@ -322,6 +316,7 @@ end
             <ul>
               <li>Stateless</li>
               <li>Intentional</li>
+              <li>Expressive</li>
               <li>Thread-safe</li>
             </ul>
           </section>
@@ -345,6 +340,17 @@ end
               <li>Implementation details are hidden</li>
             </ul>
           </section>
+
+          <section>
+            <h3>Expressive</h3>
+            <p>Do more with less</p>
+            <ul>
+              <li>Less code to write</li>
+              <li>Less code to test</li>
+              <li>Less code to maintain</li>
+            </ul>
+          </section>
+				</section>
 
           <section>
             <h3>Thread-Safe</h3>
@@ -439,7 +445,7 @@ end
 			Reveal.initialize({
 				history: true,
 				center: true,
-				progress: false,
+				progress: true,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
